@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\wu-admin\Desktop\C51程序\4qc\4qc.uvproj
+Project File Date:  09/02/2023
+
+<h2>Output:</h2>
+Build target '目标 1'
+compiling MAIN.C...
+MAIN.C(149): warning C276: constant in condition expression
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY50MS?MAIN
+Program Size: data=13.0 xdata=0 code=254
+creating hex file from "4qc"...
+"4qc" - 0 Error(s), 2 Warning(s).
+Build target '目标 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY50MS?MAIN
+Program Size: data=13.0 xdata=0 code=254
+creating hex file from "4qc"...
+"4qc" - 0 Error(s), 1 Warning(s).
+Build target '目标 1'
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY50MS?MAIN
+Program Size: data=13.0 xdata=0 code=254
+creating hex file from "4qc"...
+"4qc" - 0 Error(s), 1 Warning(s).

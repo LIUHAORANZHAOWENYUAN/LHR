@@ -1,0 +1,180 @@
+C51 COMPILER V9.01   MAIN                                                                  05/17/2024 22:20:36 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN MAIN.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE MAIN.C BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <STC8G.H>
+   2          #include "intrins.H"
+   3          unsigned char P90;
+   4          unsigned char AA;
+   5          unsigned char BB;
+   6          unsigned char QD;
+   7          sbit A1=P1^0;//YH         
+   8          sbit A2=P1^1;//YH
+   9          sbit A3=P1^6;//YQ
+  10          sbit A4=P1^7;//YQ
+  11          sbit A5=P3^7;//ZQ
+  12          sbit A6=P3^6;//ZQ
+  13          sbit A7=P3^5;//ZH
+  14          sbit A8=P3^4;//ZH
+  15          sbit A01=P3^3;//ZB
+  16          sbit A00=P3^2;//YB
+  17          
+  18          void QJ() 
+  19          {
+  20   1      A1=0;A2=1;
+  21   1      A3=1;A4=0;
+  22   1      A5=1;A6=0;
+  23   1      A7=0;A8=1;
+  24   1      }
+  25          
+  26          void Z1()
+  27          {
+  28   1      A1=0;A2=1;
+  29   1      A3=1;A4=0;
+  30   1      A5=0;A6=1;
+  31   1      A7=1;A8=0;
+  32   1      }
+  33          
+  34          void Y1()
+  35          {
+  36   1      A1=1;A2=0;
+  37   1      A3=0;A4=1;
+  38   1      A5=1;A6=0;
+  39   1      A7=0;A8=1;
+  40   1      }
+  41          
+  42          void TZ()
+  43          {
+  44   1      A1=0;A2=0;
+  45   1      A3=0;A4=0;
+  46   1      A5=0;A6=0;
+  47   1      A7=0;A8=0;
+  48   1      }
+  49          
+  50          void Delay1000ms()              //@12.000MHz
+  51          {
+  52   1              unsigned char data i, j, k;
+  53   1      
+  54   1              _nop_();
+  55   1              _nop_();
+C51 COMPILER V9.01   MAIN                                                                  05/17/2024 22:20:36 PAGE 2   
+
+  56   1              i = 61;
+  57   1              j = 225;
+  58   1              k = 62;
+  59   1              do
+  60   1              {
+  61   2                      do
+  62   2                      {
+  63   3                              while (--k);
+  64   3                      } while (--j);
+  65   2              } while (--i);
+  66   1      }
+  67          
+  68          void Delay50ms()                //@12.000MHz
+  69          {
+  70   1              unsigned char data i, j, k;
+  71   1      
+  72   1              _nop_();
+  73   1              _nop_();
+  74   1              i = 4;
+  75   1              j = 12;
+  76   1              k = 50;
+  77   1              do
+  78   1              {
+  79   2                      do
+  80   2                      {
+  81   3                              while (--k);
+  82   3                      } while (--j);
+  83   2              } while (--i);
+  84   1      }
+  85          
+  86          void Timer0_Init(void)          //20毫秒@12.000MHz
+  87          {
+  88   1              EA=1;
+  89   1              ET0=1;
+  90   1              AUXR &= 0x7F;                   //定时器时钟12T模式
+  91   1              TMOD &= 0xF0;                   //设置定时器模式
+  92   1              TL0 = 0xE0;                             //设置定时初始值
+  93   1              TH0 = 0xB1;                             //设置定时初始值
+  94   1              TF0 = 0;                                //清除TF0标志
+  95   1              TR0 = 1;                                //定时器0开始计时
+  96   1      }
+  97          
+  98          void INT_INIT()
+  99          {
+ 100   1      EA = 1; //总中断开关
+ 101   1      EX0 = 1; //允许响应外部中断 0
+ 102   1      EX1 = 1; //允许响应外部中断 1
+ 103   1      IE0 = 0; //设外部中断 0 为低电平触发
+ 104   1      IE1 = 0; //设外部中断 1 为低电平触发
+ 105   1      }
+ 106          
+ 107          void main()
+ 108          {
+ 109   1      P1M0=0X00;P1M1=0X00; //定义I/O口状态
+ 110   1      P3M0=0X00;P3M1=0X00; //定义I/O口状态
+ 111   1      INT_INIT();
+ 112   1      Timer0_Init();
+ 113   1      Z1();
+ 114   1      P90=0;
+ 115   1      while(1)
+ 116   1      {       
+ 117   2              QJ();
+C51 COMPILER V9.01   MAIN                                                                  05/17/2024 22:20:36 PAGE 3   
+
+ 118   2              AA=0;                             
+ 119   2              for(BB=0;BB<11;BB++)
+ 120   2              {
+ 121   3              Delay1000ms();
+ 122   3              AA++;
+ 123   3              }
+ 124   2      }
+ 125   1      }
+ 126                  void QQ1()interrupt 2
+ 127                  {       
+ 128   1              if(A01==1)
+ 129   1              {
+ 130   2              Z1();
+ 131   2              IE1=1;
+ 132   2              }
+ 133   1              }
+ 134                  void QQ0()interrupt 0
+ 135                  {
+ 136   1              if(A00==1)
+ 137   1              {
+ 138   2              Y1();
+ 139   2              IE0=1;
+ 140   2              }
+ 141   1              }               
+ 142          void AWM()interrupt 1
+ 143          {
+ 144   1              TL0=0xC0;                               //设置定时初始值
+ 145   1              TH0=0xE0;                               //设置定时初始值
+ 146   1              P90++;
+ 147   1              if(P90<AA) QJ();
+ 148   1              else TZ(); 
+ 149   1              if(P90=11)P90=0;
+*** WARNING C276 IN LINE 149 OF MAIN.C: constant in condition expression
+ 150   1      }
+ 151          
+ 152          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    230    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
